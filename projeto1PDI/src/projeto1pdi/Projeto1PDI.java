@@ -32,7 +32,8 @@ import javax.swing.JTextField;
  * @author felipe
  */
 public class Projeto1PDI extends JFrame {
-
+        
+        int x;
 	private static final long serialVersionUID = 1L;
 	private BufferedImage imgBuff, img2;
 	private JFileChooser fc;
@@ -263,12 +264,12 @@ public class Projeto1PDI extends JFrame {
 				);
 		media.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (Integer.parseInt(mask.getText()) == 3 || Integer.parseInt(mask.getText()) == 5 || Integer.parseInt(mask.getText()) == 7) {
+				//if (Integer.parseInt(mask.getText()) == 3 || Integer.parseInt(mask.getText()) == 5 || Integer.parseInt(mask.getText()) == 7) {
 					img2 = media(bufferImagem(f), Integer.parseInt(mask.getText()));
 					paneImg.setImg(img2);
-				} else {
-					JOptionPane.showMessageDialog(null, "Digite um tamanho válido da mascara [3,5,7]");
-				}
+				//} else {
+					//JOptionPane.showMessageDialog(null, "Digite um tamanho válido da mascara [3,5,7]");
+				//}
 			}
 		}
 				);
@@ -575,7 +576,24 @@ public class Projeto1PDI extends JFrame {
 		Color rgb;
 		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < width; j++) {
-				switch (n) {
+				
+                            if (!(i == 0 || j == 0 || i == height - 1 || j == width - 1)) {
+						r = (new Color(image.getRGB(i - 1, j - 1)).getRed() + new Color(image.getRGB(i - 1, j)).getRed() + new Color(image.getRGB(i - 1, j + 1)).getRed()
+								+ new Color(image.getRGB(i, j - 1)).getRed() + new Color(image.getRGB(i, j)).getRed() + new Color(image.getRGB(i, j + 1)).getRed()
+								+ new Color(image.getRGB(i + 1, j - 1)).getRed() + new Color(image.getRGB(i + 1, j)).getRed() + new Color(image.getRGB(i + 1, j + 1)).getRed()) / (n*n);
+
+						g = (new Color(image.getRGB(i - 1, j - 1)).getGreen() + new Color(image.getRGB(i - 1, j)).getGreen() + new Color(image.getRGB(i - 1, j + 1)).getGreen()
+								+ new Color(image.getRGB(i, j - 1)).getGreen() + new Color(image.getRGB(i, j)).getGreen() + new Color(image.getRGB(i, j + 1)).getGreen()
+								+ new Color(image.getRGB(i + 1, j - 1)).getGreen() + new Color(image.getRGB(i + 1, j)).getGreen() + new Color(image.getRGB(i + 1, j + 1)).getGreen()) / (n*n);
+
+						b = (new Color(image.getRGB(i - 1, j - 1)).getBlue() + new Color(image.getRGB(i - 1, j)).getBlue() + new Color(image.getRGB(i - 1, j + 1)).getBlue()
+								+ new Color(image.getRGB(i, j - 1)).getBlue() + new Color(image.getRGB(i, j)).getBlue() + new Color(image.getRGB(i, j + 1)).getBlue()
+								+ new Color(image.getRGB(i + 1, j - 1)).getBlue() + new Color(image.getRGB(i + 1, j)).getBlue() + new Color(image.getRGB(i + 1, j + 1)).getBlue()) / (n*n);
+						rgb = new Color(r, g, b);
+						image.setRGB(i, j, rgb.getRGB());
+
+			    }
+                            /*switch (n) {
 				case 3:
 					if (!(i == 0 || j == 0 || i == height - 1 || j == width - 1)) {
 						r = (new Color(image.getRGB(i - 1, j - 1)).getRed() + new Color(image.getRGB(i - 1, j)).getRed() + new Color(image.getRGB(i - 1, j + 1)).getRed()
@@ -647,7 +665,7 @@ public class Projeto1PDI extends JFrame {
 						image.setRGB(i, j, rgb.getRGB());
 					}
 					break;
-				}
+				}*/
 			}
 		}
 		return image;
