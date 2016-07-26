@@ -56,7 +56,6 @@ public class Projeto1PDI extends JFrame {
         convertRGB = new JButton("RGB");
         bAdd = new JButton("Add Brilho");
         bMult = new JButton("Mult Brilho");
-        mask = new JTextField();
         media = new JButton("Media");
         mediana = new JButton("Mediana");
         limiar = new JButton("Limiar");

@@ -205,102 +205,25 @@ public class Efeitos {
     }
 
     public static BufferedImage media(BufferedImage image, int n) {
-        int r, g, b;
         int width = image.getWidth();
         int height = image.getHeight();
+        int r, g, b, i2=0, j2=0;
         Color rgb;
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
 
-                if (!(i == 0 || j == 0 || i == height - 1 || j == width - 1)) {
-                    r = (new Color(image.getRGB(i - 1, j - 1)).getRed() + new Color(image.getRGB(i - 1, j)).getRed() + new Color(image.getRGB(i - 1, j + 1)).getRed()
-                            + new Color(image.getRGB(i, j - 1)).getRed() + new Color(image.getRGB(i, j)).getRed() + new Color(image.getRGB(i, j + 1)).getRed()
-                            + new Color(image.getRGB(i + 1, j - 1)).getRed() + new Color(image.getRGB(i + 1, j)).getRed() + new Color(image.getRGB(i + 1, j + 1)).getRed()) / (n * n);
-
-                    g = (new Color(image.getRGB(i - 1, j - 1)).getGreen() + new Color(image.getRGB(i - 1, j)).getGreen() + new Color(image.getRGB(i - 1, j + 1)).getGreen()
-                            + new Color(image.getRGB(i, j - 1)).getGreen() + new Color(image.getRGB(i, j)).getGreen() + new Color(image.getRGB(i, j + 1)).getGreen()
-                            + new Color(image.getRGB(i + 1, j - 1)).getGreen() + new Color(image.getRGB(i + 1, j)).getGreen() + new Color(image.getRGB(i + 1, j + 1)).getGreen()) / (n * n);
-
-                    b = (new Color(image.getRGB(i - 1, j - 1)).getBlue() + new Color(image.getRGB(i - 1, j)).getBlue() + new Color(image.getRGB(i - 1, j + 1)).getBlue()
-                            + new Color(image.getRGB(i, j - 1)).getBlue() + new Color(image.getRGB(i, j)).getBlue() + new Color(image.getRGB(i, j + 1)).getBlue()
-                            + new Color(image.getRGB(i + 1, j - 1)).getBlue() + new Color(image.getRGB(i + 1, j)).getBlue() + new Color(image.getRGB(i + 1, j + 1)).getBlue()) / (n * n);
-                    rgb = new Color(r, g, b);
-                    image.setRGB(i, j, rgb.getRGB());
-
-                }
-                /*switch (n) {
-				case 3:
-					if (!(i == 0 || j == 0 || i == height - 1 || j == width - 1)) {
-						r = (new Color(image.getRGB(i - 1, j - 1)).getRed() + new Color(image.getRGB(i - 1, j)).getRed() + new Color(image.getRGB(i - 1, j + 1)).getRed()
-								+ new Color(image.getRGB(i, j - 1)).getRed() + new Color(image.getRGB(i, j)).getRed() + new Color(image.getRGB(i, j + 1)).getRed()
-								+ new Color(image.getRGB(i + 1, j - 1)).getRed() + new Color(image.getRGB(i + 1, j)).getRed() + new Color(image.getRGB(i + 1, j + 1)).getRed()) / 9;
-
-						g = (new Color(image.getRGB(i - 1, j - 1)).getGreen() + new Color(image.getRGB(i - 1, j)).getGreen() + new Color(image.getRGB(i - 1, j + 1)).getGreen()
-								+ new Color(image.getRGB(i, j - 1)).getGreen() + new Color(image.getRGB(i, j)).getGreen() + new Color(image.getRGB(i, j + 1)).getGreen()
-								+ new Color(image.getRGB(i + 1, j - 1)).getGreen() + new Color(image.getRGB(i + 1, j)).getGreen() + new Color(image.getRGB(i + 1, j + 1)).getGreen()) / 9;
-
-						b = (new Color(image.getRGB(i - 1, j - 1)).getBlue() + new Color(image.getRGB(i - 1, j)).getBlue() + new Color(image.getRGB(i - 1, j + 1)).getBlue()
-								+ new Color(image.getRGB(i, j - 1)).getBlue() + new Color(image.getRGB(i, j)).getBlue() + new Color(image.getRGB(i, j + 1)).getBlue()
-								+ new Color(image.getRGB(i + 1, j - 1)).getBlue() + new Color(image.getRGB(i + 1, j)).getBlue() + new Color(image.getRGB(i + 1, j + 1)).getBlue()) / 9;
-						rgb = new Color(r, g, b);
-						image.setRGB(i, j, rgb.getRGB());
-
-					}
-					break;
-				case 5:
-					if (!(i <= 1 || j <= 1 || i >= height - 2 || j >= width - 2)) {
-						r = (new Color(image.getRGB(i - 2, j - 2)).getRed() + new Color(image.getRGB(i - 2, j - 1)).getRed() + new Color(image.getRGB(i - 2, j)).getRed() + new Color(image.getRGB(i - 2, j + 1)).getRed() + new Color(image.getRGB(i - 2, j + 2)).getRed()
-								+ new Color(image.getRGB(i - 1, j - 2)).getRed() + new Color(image.getRGB(i - 1, j - 1)).getRed() + new Color(image.getRGB(i - 1, j)).getRed() + new Color(image.getRGB(i - 1, j + 1)).getRed() + new Color(image.getRGB(i - 1, j + 2)).getRed()
-								+ new Color(image.getRGB(i, j - 2)).getRed() + new Color(image.getRGB(i, j - 1)).getRed() + new Color(image.getRGB(i, j)).getRed() + new Color(image.getRGB(i, j + 1)).getRed() + new Color(image.getRGB(i, j + 2)).getRed()
-								+ new Color(image.getRGB(i + 1, j - 2)).getRed() + new Color(image.getRGB(i + 1, j - 1)).getRed() + new Color(image.getRGB(i + 1, j)).getRed() + new Color(image.getRGB(i + 1, j + 1)).getRed() + new Color(image.getRGB(i + 1, j + 2)).getRed()
-								+ new Color(image.getRGB(i + 2, j - 2)).getRed() + new Color(image.getRGB(i + 2, j - 1)).getRed() + new Color(image.getRGB(i + 2, j)).getRed() + new Color(image.getRGB(i + 2, j + 1)).getRed() + new Color(image.getRGB(i + 2, j + 2)).getRed()) / 25;
-
-						g = (new Color(image.getRGB(i - 2, j - 2)).getGreen() + new Color(image.getRGB(i - 2, j - 1)).getGreen() + new Color(image.getRGB(i - 2, j)).getGreen() + new Color(image.getRGB(i - 2, j + 1)).getGreen() + new Color(image.getRGB(i - 2, j + 2)).getGreen()
-								+ new Color(image.getRGB(i - 1, j - 2)).getGreen() + new Color(image.getRGB(i - 1, j - 1)).getGreen() + new Color(image.getRGB(i - 1, j)).getGreen() + new Color(image.getRGB(i - 1, j + 1)).getGreen() + new Color(image.getRGB(i - 1, j + 2)).getGreen()
-								+ new Color(image.getRGB(i, j - 2)).getGreen() + new Color(image.getRGB(i, j - 1)).getGreen() + new Color(image.getRGB(i, j)).getGreen() + new Color(image.getRGB(i, j + 1)).getGreen() + new Color(image.getRGB(i, j + 2)).getGreen()
-								+ new Color(image.getRGB(i + 1, j - 2)).getGreen() + new Color(image.getRGB(i + 1, j - 1)).getGreen() + new Color(image.getRGB(i + 1, j)).getGreen() + new Color(image.getRGB(i + 1, j + 1)).getGreen() + new Color(image.getRGB(i + 1, j + 2)).getGreen()
-								+ new Color(image.getRGB(i + 2, j - 2)).getGreen() + new Color(image.getRGB(i + 2, j - 1)).getGreen() + new Color(image.getRGB(i + 2, j)).getGreen() + new Color(image.getRGB(i + 2, j + 1)).getGreen() + new Color(image.getRGB(i + 2, j + 2)).getGreen()) / 25;
-
-						b = (new Color(image.getRGB(i - 2, j - 2)).getBlue() + new Color(image.getRGB(i - 2, j - 1)).getBlue() + new Color(image.getRGB(i - 2, j)).getBlue() + new Color(image.getRGB(i - 2, j + 1)).getBlue() + new Color(image.getRGB(i - 2, j + 2)).getBlue()
-								+ new Color(image.getRGB(i - 1, j - 2)).getBlue() + new Color(image.getRGB(i - 1, j - 1)).getBlue() + new Color(image.getRGB(i - 1, j)).getBlue() + new Color(image.getRGB(i - 1, j + 1)).getBlue() + new Color(image.getRGB(i - 1, j + 2)).getBlue()
-								+ new Color(image.getRGB(i, j - 2)).getBlue() + new Color(image.getRGB(i, j - 1)).getBlue() + new Color(image.getRGB(i, j)).getBlue() + new Color(image.getRGB(i, j + 1)).getBlue() + new Color(image.getRGB(i, j + 2)).getBlue()
-								+ new Color(image.getRGB(i + 1, j - 2)).getBlue() + new Color(image.getRGB(i + 1, j - 1)).getBlue() + new Color(image.getRGB(i + 1, j)).getBlue() + new Color(image.getRGB(i + 1, j + 1)).getBlue() + new Color(image.getRGB(i + 1, j + 2)).getBlue()
-								+ new Color(image.getRGB(i + 2, j - 2)).getBlue() + new Color(image.getRGB(i + 2, j - 1)).getBlue() + new Color(image.getRGB(i + 2, j)).getBlue() + new Color(image.getRGB(i + 2, j + 1)).getBlue() + new Color(image.getRGB(i + 2, j + 2)).getBlue()) / 25;
-						rgb = new Color(r, g, b);
-						image.setRGB(i, j, rgb.getRGB());
-					}
-					break;
-				case 7:
-					if (!(i <= 2 || j <= 2 || i >= height - 3 || j >= width - 3)) {
-						r = (new Color(image.getRGB(i - 3, j - 3)).getRed() + new Color(image.getRGB(i - 3, j - 2)).getRed() + new Color(image.getRGB(i - 3, j - 1)).getRed() + new Color(image.getRGB(i - 3, j)).getRed() + new Color(image.getRGB(i - 3, j + 1)).getRed() + new Color(image.getRGB(i - 3, j + 2)).getRed() + new Color(image.getRGB(i - 3, j + 3)).getRed()
-								+ new Color(image.getRGB(i - 2, j - 3)).getRed() + new Color(image.getRGB(i - 2, j - 2)).getRed() + new Color(image.getRGB(i - 2, j - 1)).getRed() + new Color(image.getRGB(i - 2, j)).getRed() + new Color(image.getRGB(i - 2, j + 1)).getRed() + new Color(image.getRGB(i - 2, j + 2)).getRed() + new Color(image.getRGB(i - 2, j + 3)).getRed()
-								+ new Color(image.getRGB(i - 1, j - 3)).getRed() + new Color(image.getRGB(i - 1, j - 2)).getRed() + new Color(image.getRGB(i - 1, j - 1)).getRed() + new Color(image.getRGB(i - 1, j)).getRed() + new Color(image.getRGB(i - 1, j + 1)).getRed() + new Color(image.getRGB(i - 1, j + 2)).getRed() + new Color(image.getRGB(i - 1, j + 3)).getRed()
-								+ new Color(image.getRGB(i, j - 3)).getRed() + new Color(image.getRGB(i - 1, j - 2)).getRed() + new Color(image.getRGB(i, j - 1)).getRed() + new Color(image.getRGB(i, j)).getRed() + new Color(image.getRGB(i, j + 1)).getRed() + new Color(image.getRGB(i, j + 2)).getRed() + new Color(image.getRGB(i, j + 3)).getRed()
-								+ new Color(image.getRGB(i + 1, j - 3)).getRed() + new Color(image.getRGB(i + 1, j - 2)).getRed() + new Color(image.getRGB(i + 1, j - 1)).getRed() + new Color(image.getRGB(i + 1, j)).getRed() + new Color(image.getRGB(i + 1, j + 1)).getRed() + new Color(image.getRGB(i + 1, j + 2)).getRed() + new Color(image.getRGB(i + 1, j + 3)).getRed()
-								+ new Color(image.getRGB(i + 2, j - 3)).getRed() + new Color(image.getRGB(i + 2, j - 2)).getRed() + new Color(image.getRGB(i + 2, j - 1)).getRed() + new Color(image.getRGB(i + 2, j)).getRed() + new Color(image.getRGB(i + 2, j + 1)).getRed() + new Color(image.getRGB(i + 2, j + 2)).getRed() + new Color(image.getRGB(i + 2, j + 3)).getRed()
-								+ new Color(image.getRGB(i + 3, j - 3)).getRed() + new Color(image.getRGB(i + 3, j - 2)).getRed() + new Color(image.getRGB(i + 3, j - 1)).getRed() + new Color(image.getRGB(i + 3, j)).getRed() + new Color(image.getRGB(i + 3, j + 1)).getRed() + new Color(image.getRGB(i + 3, j + 2)).getRed() + new Color(image.getRGB(i + 3, j + 3)).getRed()) / 49;
-
-						g = (new Color(image.getRGB(i - 3, j - 3)).getGreen() + new Color(image.getRGB(i - 3, j - 2)).getGreen() + new Color(image.getRGB(i - 3, j - 1)).getGreen() + new Color(image.getRGB(i - 3, j)).getGreen() + new Color(image.getRGB(i - 3, j + 1)).getGreen() + new Color(image.getRGB(i - 3, j + 2)).getGreen() + new Color(image.getRGB(i - 3, j + 3)).getGreen()
-								+ new Color(image.getRGB(i - 2, j - 3)).getGreen() + new Color(image.getRGB(i - 2, j - 2)).getGreen() + new Color(image.getRGB(i - 2, j - 1)).getGreen() + new Color(image.getRGB(i - 2, j)).getGreen() + new Color(image.getRGB(i - 2, j + 1)).getGreen() + new Color(image.getRGB(i - 2, j + 2)).getGreen() + new Color(image.getRGB(i - 2, j + 3)).getGreen()
-								+ new Color(image.getRGB(i - 1, j - 3)).getGreen() + new Color(image.getRGB(i - 1, j - 2)).getGreen() + new Color(image.getRGB(i - 1, j - 1)).getGreen() + new Color(image.getRGB(i - 1, j)).getGreen() + new Color(image.getRGB(i - 1, j + 1)).getGreen() + new Color(image.getRGB(i - 1, j + 2)).getGreen() + new Color(image.getRGB(i - 1, j + 3)).getGreen()
-								+ new Color(image.getRGB(i, j - 3)).getGreen() + new Color(image.getRGB(i - 1, j - 2)).getGreen() + new Color(image.getRGB(i, j - 1)).getGreen() + new Color(image.getRGB(i, j)).getGreen() + new Color(image.getRGB(i, j + 1)).getGreen() + new Color(image.getRGB(i, j + 2)).getGreen() + new Color(image.getRGB(i, j + 3)).getGreen()
-								+ new Color(image.getRGB(i + 1, j - 3)).getGreen() + new Color(image.getRGB(i + 1, j - 2)).getGreen() + new Color(image.getRGB(i + 1, j - 1)).getGreen() + new Color(image.getRGB(i + 1, j)).getGreen() + new Color(image.getRGB(i + 1, j + 1)).getGreen() + new Color(image.getRGB(i + 1, j + 2)).getGreen() + new Color(image.getRGB(i + 1, j + 3)).getGreen()
-								+ new Color(image.getRGB(i + 2, j - 3)).getGreen() + new Color(image.getRGB(i + 2, j - 2)).getGreen() + new Color(image.getRGB(i + 2, j - 1)).getGreen() + new Color(image.getRGB(i + 2, j)).getGreen() + new Color(image.getRGB(i + 2, j + 1)).getGreen() + new Color(image.getRGB(i + 2, j + 2)).getGreen() + new Color(image.getRGB(i + 2, j + 3)).getGreen()
-								+ new Color(image.getRGB(i + 3, j - 3)).getGreen() + new Color(image.getRGB(i + 3, j - 2)).getGreen() + new Color(image.getRGB(i + 3, j - 1)).getGreen() + new Color(image.getRGB(i + 3, j)).getGreen() + new Color(image.getRGB(i + 3, j + 1)).getGreen() + new Color(image.getRGB(i + 3, j + 2)).getGreen() + new Color(image.getRGB(i + 3, j + 3)).getGreen()) / 49;
-
-						b = (new Color(image.getRGB(i - 3, j - 3)).getBlue() + new Color(image.getRGB(i - 3, j - 2)).getBlue() + new Color(image.getRGB(i - 3, j - 1)).getBlue() + new Color(image.getRGB(i - 3, j)).getBlue() + new Color(image.getRGB(i - 3, j + 1)).getBlue() + new Color(image.getRGB(i - 3, j + 2)).getBlue() + new Color(image.getRGB(i - 3, j + 3)).getBlue()
-								+ new Color(image.getRGB(i - 2, j - 3)).getBlue() + new Color(image.getRGB(i - 2, j - 2)).getBlue() + new Color(image.getRGB(i - 2, j - 1)).getBlue() + new Color(image.getRGB(i - 2, j)).getBlue() + new Color(image.getRGB(i - 2, j + 1)).getBlue() + new Color(image.getRGB(i - 2, j + 2)).getBlue() + new Color(image.getRGB(i - 2, j + 3)).getBlue()
-								+ new Color(image.getRGB(i - 1, j - 3)).getBlue() + new Color(image.getRGB(i - 1, j - 2)).getBlue() + new Color(image.getRGB(i - 1, j - 1)).getBlue() + new Color(image.getRGB(i - 1, j)).getBlue() + new Color(image.getRGB(i - 1, j + 1)).getBlue() + new Color(image.getRGB(i - 1, j + 2)).getBlue() + new Color(image.getRGB(i - 1, j + 3)).getBlue()
-								+ new Color(image.getRGB(i, j - 3)).getBlue() + new Color(image.getRGB(i - 1, j - 2)).getBlue() + new Color(image.getRGB(i, j - 1)).getBlue() + new Color(image.getRGB(i, j)).getBlue() + new Color(image.getRGB(i, j + 1)).getBlue() + new Color(image.getRGB(i, j + 2)).getBlue() + new Color(image.getRGB(i, j + 3)).getBlue()
-								+ new Color(image.getRGB(i + 1, j - 3)).getBlue() + new Color(image.getRGB(i + 1, j - 2)).getBlue() + new Color(image.getRGB(i + 1, j - 1)).getBlue() + new Color(image.getRGB(i + 1, j)).getBlue() + new Color(image.getRGB(i + 1, j + 1)).getBlue() + new Color(image.getRGB(i + 1, j + 2)).getBlue() + new Color(image.getRGB(i + 1, j + 3)).getBlue()
-								+ new Color(image.getRGB(i + 2, j - 3)).getBlue() + new Color(image.getRGB(i + 2, j - 2)).getBlue() + new Color(image.getRGB(i + 2, j - 1)).getBlue() + new Color(image.getRGB(i + 2, j)).getBlue() + new Color(image.getRGB(i + 2, j + 1)).getBlue() + new Color(image.getRGB(i + 2, j + 2)).getBlue() + new Color(image.getRGB(i + 2, j + 3)).getBlue()
-								+ new Color(image.getRGB(i + 3, j - 3)).getBlue() + new Color(image.getRGB(i + 3, j - 2)).getBlue() + new Color(image.getRGB(i + 3, j - 1)).getBlue() + new Color(image.getRGB(i + 3, j)).getBlue() + new Color(image.getRGB(i + 3, j + 1)).getBlue() + new Color(image.getRGB(i + 3, j + 2)).getBlue() + new Color(image.getRGB(i + 3, j + 3)).getBlue()) / 49;
-
-						rgb = new Color(r, g, b);
-						image.setRGB(i, j, rgb.getRGB());
-					}
-					break;
-				}*/
+        for (int i = 0; i < width-n; i++) {
+            for (int j = 0; j < height-n; j++) {
+                r = g = b = 0;
+                //Bloco com dimensão nxn, em que o pixel do meio será alterado de acordo com a média
+                for(i2=i; i2 < i+n; i2++){
+                    for(j2=j; j2 < j+n; j2++){
+                        r += new Color(image.getRGB(i2, j2)).getRed();
+                        g += new Color(image.getRGB(i2, j2)).getGreen();
+                        b += new Color(image.getRGB(i2, j2)).getBlue();
+                    }
+                }           
+                r /= (n*n); g /= (n*n); b /= (n*n); //Após a soma, calcula-se a média
+                rgb = new Color(r, g, b);
+                image.setRGB(i2-(n/2)-1, j2-(n/2)-1, rgb.getRGB()); //Insere a cor no pixel do meio
             }
         }
         return image;
