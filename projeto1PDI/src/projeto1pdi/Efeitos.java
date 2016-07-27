@@ -28,9 +28,7 @@ public class Efeitos {
             for (int j = 0; j < height; j++) {
                 Color c = new Color(image.getRGB(i, j));
                 int r = c.getRed();
-                int g = 0;
-                int b = 0;
-                c = new Color(r, g, b);
+                c = new Color(r, 0, 0);
                 image.setRGB(i, j, c.getRGB());
             }
         }
@@ -43,10 +41,8 @@ public class Efeitos {
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 Color c = new Color(image.getRGB(i, j));
-                int r = 0;
                 int g = c.getGreen();
-                int b = 0;
-                c= new Color(r, g, b);
+                c= new Color(0, g, 0);
                 image.setRGB(i, j, c.getRGB());
             }
         }
@@ -59,10 +55,8 @@ public class Efeitos {
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 Color c = new Color(image.getRGB(i, j));
-                int r = 0;
-                int g = 0;
                 int b = c.getBlue();
-                c= new Color(r, g, b);
+                c= new Color(0, 0, b);
                 image.setRGB(i, j, c.getRGB());
             }
         }
@@ -74,10 +68,10 @@ public class Efeitos {
         int height = image.getHeight();
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                int rgb = image.getRGB(i, j);
-                int r = 255 - (int) ((rgb & 0x00FF0000) >>> 16);
-                int g = 255 - (int) ((rgb & 0x0000FF00) >>> 8);
-                int b = 255 - (int) (rgb & 0x000000FF);
+                Color c = new Color(image.getRGB(i, j));
+                int r = 255 - c.getRed();
+                int g = 255 - c.getGreen();
+                int b = 255 - c.getBlue();
                 Color color = new Color(r, g, b);
                 image.setRGB(i, j, color.getRGB());
             }
