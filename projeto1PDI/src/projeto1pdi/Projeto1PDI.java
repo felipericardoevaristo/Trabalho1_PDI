@@ -38,7 +38,7 @@ public class Projeto1PDI extends JFrame {
     private JPanel pane;
     private JLabel dim;
     private VisualizaImg paneImg;
-    private JButton btnAbrir, btnSalvar, btnOrigin, btnGray, btnR, btnG, btnB, btnN, convertRGB, bAdd, bMult, media, mediana, limiar, blend;
+    private JButton btnAbrir, btnSalvar, btnOrigin, btnGray, btnR, btnG, btnB, btnN, convertRGB, bAdd, bMult, media, mediana, blend;
     private JTextField brilhoA, brilhoM, mask, mask2, threshold;
     
     public Projeto1PDI() {
@@ -58,7 +58,6 @@ public class Projeto1PDI extends JFrame {
         bMult = new JButton("Mult Brilho");
         media = new JButton("Media");
         mediana = new JButton("Mediana");
-        limiar = new JButton("Limiar");
         blend = new JButton("Blend");
         brilhoA = new JTextField();
         brilhoM = new JTextField();
@@ -121,12 +120,7 @@ public class Projeto1PDI extends JFrame {
         mediana.setBounds(685, 310, 100, 25);
         pane.add(mediana);
 
-        limiar.setBounds(685, 340, 100, 25);
-        pane.add(limiar);
-        threshold.setBounds(660, 340, 25, 26);
-        pane.add(threshold);
-
-        blend.setBounds(685, 370, 100, 25);
+        blend.setBounds(685, 340, 100, 25);
         pane.add(blend);
 
         add(pane);
@@ -275,19 +269,6 @@ public class Projeto1PDI extends JFrame {
         }
         );
 
-        limiar.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-
-                if (threshold.getText() != "") {
-                    img2 = Efeitos.limiar(bufferImagem(f), Integer.parseInt(threshold.getText()));
-                    paneImg.setImg(img2);
-                } else {
-                    img2 = Efeitos.limiar(bufferImagem(f), 0);
-                    paneImg.setImg(img2);
-                }
-            }
-        }
-        );
 
         blend.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
