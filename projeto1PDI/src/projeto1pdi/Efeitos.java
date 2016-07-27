@@ -12,13 +12,10 @@ public class Efeitos {
         int height = image.getHeight();
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                int rgb = image.getRGB(i, j);
-                int r = (int) ((rgb & 0x00FF0000) >>> 16);
-                int g = (int) ((rgb & 0x0000FF00) >>> 8);
-                int b = (int) (rgb & 0x000000FF);
-                int gs = (r + g + b) / 3;
-                Color color = new Color(gs, gs, gs);
-                image.setRGB(i, j, color.getRGB());
+                Color c = new Color(image.getRGB(i, j));
+                int tomCinza = (c.getRed()+c.getGreen()+c.getBlue())/3;
+                c = new Color(tomCinza, tomCinza, tomCinza);
+                image.setRGB(i, j, c.getRGB());
             }
         }
         return image;
