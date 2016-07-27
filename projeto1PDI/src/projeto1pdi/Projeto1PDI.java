@@ -38,7 +38,7 @@ public class Projeto1PDI extends JFrame {
     private JPanel pane;
     private JLabel dim;
     private VisualizaImg paneImg;
-    private JButton btnAbrir, btnSalvar, btnOrigin, btnGray, btnR, btnG, btnB, btnN, convertRGB, bAdd, bMult, media, mediana, blend;
+    private JButton btnAbrir, btnOrigin, btnGray, btnR, btnG, btnB, btnN, convertRGB, bAdd, bMult, media, mediana, blend;
     private JTextField brilhoA, brilhoM, mask, mask2, threshold;
     
     public Projeto1PDI() {
@@ -46,7 +46,6 @@ public class Projeto1PDI extends JFrame {
         pane = new JPanel();
 
         btnAbrir = new JButton("Abrir");
-        btnSalvar = new JButton("Salvar");
         btnOrigin = new JButton("Original");
         btnGray = new JButton("GrayScale");
         btnR = new JButton("Red");
@@ -81,8 +80,6 @@ public class Projeto1PDI extends JFrame {
 
         btnAbrir.setBounds(10, 10, 100, 25);
         pane.add(btnAbrir);
-        btnSalvar.setBounds(120, 10, 100, 25);
-        pane.add(btnSalvar);
 
         btnOrigin.setBounds(685, 10, 100, 25);
         pane.add(btnOrigin);
@@ -137,12 +134,6 @@ public class Projeto1PDI extends JFrame {
         }
         );
 
-        btnSalvar.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                salvarArquivo(img2);
-            }
-        }
-        );
 
         btnOrigin.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -189,7 +180,7 @@ public class Projeto1PDI extends JFrame {
 
         btnN.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String[] choices = {"RGB", "Y", "R", "G", "B", "Quit"};
+                String[] choices = {"RGB", "R", "G", "B", "Quit"};
                 //negativo
                 int op = JOptionPane.showOptionDialog(Projeto1PDI.getFrames()[0],
                         "Opções Negativo:",
@@ -202,17 +193,14 @@ public class Projeto1PDI extends JFrame {
                 switch (op) {
                     case 0:
                         img2 = Efeitos.negativoRGB(bufferImagem(f));
-                        break;
+                        break;                
                     case 1:
-
-                        break;
-                    case 2:
                         img2 = Efeitos.negativoR(bufferImagem(f));
                         break;
-                    case 3:
+                    case 2:
                         img2 = Efeitos.negativoG(bufferImagem(f));
                         break;
-                    case 4:
+                    case 3:
                         img2 = Efeitos.negativoB(bufferImagem(f));
                         break;
                 }
@@ -299,26 +287,6 @@ public class Projeto1PDI extends JFrame {
         return fLocal;
     }
 
-    public void salvarArquivo(BufferedImage im) {
-        fc.setFileHidingEnabled(false);
-        fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        int i = fc.showSaveDialog(null);
-
-        if (i == JFileChooser.APPROVE_OPTION) {
-            String caminho = String.valueOf(fc.getSelectedFile().getAbsolutePath());
-            try {
-                File novoF = new File(caminho + ".jpg");
-                ImageIO.write(im, "JPG", novoF);
-                JOptionPane.showMessageDialog(null, "Arquivo salvo");
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Operação cancelada");
-        }
-
-    }
 
     public String caminhoArquivo(File f) {
         return f.getAbsolutePath();
