@@ -225,24 +225,29 @@ public class Efeitos {
         int r[] = new int[n*n], g[] = new int[n*n], b[] = new int[n*n], i2=0, j2=0, cont;
         Color rgb;
 
-        for (int i = 0; i < width-n; i++) {
-            for (int j = 0; j < height-n; j++) {
-                //Bloco com dimensão nxn, em que o pixel do meio será alterado de acordo com a média
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
                 cont = 0;
-                for(i2=i; i2 < i+n; i2++){
-                    for(j2=j; j2 < j+n; j2++){
-                        r[cont] = new Color(image.getRGB(i2, j2)).getRed();
-                        g[cont] = new Color(image.getRGB(i2, j2)).getGreen();
-                        b[cont] = new Color(image.getRGB(i2, j2)).getBlue();
-                        cont++;
+                //Bloco com dimensão nxn, em que o pixel do meio será alterado de acordo com a mediana
+                for(i2=i-(n/2); i2 <= i+(n/2); i2++){
+                    for(j2=j-(n/2); j2 <= j+(n/2); j2++){
+                        try{
+                            r[cont] = new Color(image.getRGB(i2, j2)).getRed();
+                            g[cont] = new Color(image.getRGB(i2, j2)).getGreen();
+                            b[cont] = new Color(image.getRGB(i2, j2)).getBlue();
+                            cont++;
+                        }
+                        catch(ArrayIndexOutOfBoundsException e){
+                            //r += 0; g += 0; b += 0; // Processamento desnecessário
+                        }
                     }
                 }           
                 Arrays.sort(r); Arrays.sort(g); Arrays.sort(b);
                 rgb = new Color(r[r.length/2], g[g.length/2], b[b.length/2]);
-                image.setRGB(i2-(n/2)-1, j2-(n/2)-1, rgb.getRGB()); //Insere a cor no pixel do meio
+                image.setRGB(i, j, rgb.getRGB()); //Insere a cor no pixel do meio
             }
         }
-        return image;
+        return image; 
     }
 
     public static BufferedImage blend(BufferedImage img, BufferedImage img2) {
