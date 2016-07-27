@@ -84,11 +84,9 @@ public class Efeitos {
         int height = image.getHeight();
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                int rgb = image.getRGB(i, j);
-                int r = 255 - (int) ((rgb & 0x00FF0000) >>> 16);
-                int g = 0;//(int) ((rgb & 0x0000FF00) >>> 8);
-                int b = 0;//(int) (rgb & 0x000000FF);
-                Color color = new Color(r, g, b);
+                Color c = new Color(image.getRGB(i, j));
+                int r = 255 - c.getRed();
+                Color color = new Color(r, 0, 0);
                 image.setRGB(i, j, color.getRGB());
             }
         }
@@ -100,11 +98,9 @@ public class Efeitos {
         int height = image.getHeight();
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                int rgb = image.getRGB(i, j);
-                int r = 0;//(int) ((rgb & 0x00FF0000) >>> 16);
-                int g = 255 - (int) ((rgb & 0x0000FF00) >>> 8);
-                int b = 0;//(int) (rgb & 0x000000FF);
-                Color color = new Color(r, g, b);
+                Color c = new Color(image.getRGB(i, j));
+                int g = 255 - c.getGreen();
+                Color color = new Color(0, g, 0);
                 image.setRGB(i, j, color.getRGB());
             }
         }
@@ -116,11 +112,9 @@ public class Efeitos {
         int height = image.getHeight();
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                int rgb = image.getRGB(i, j);
-                int r = 0;//(int) ((rgb & 0x00FF0000) >>> 16);
-                int g = 0;//(int) ((rgb & 0x0000FF00) >>> 8);
-                int b = 255 - (int) (rgb & 0x000000FF);
-                Color color = new Color(r, g, b);
+                Color c = new Color(image.getRGB(i, j));
+                int b = 255 - c.getBlue();
+                Color color = new Color(0, 0, b);
                 image.setRGB(i, j, color.getRGB());
             }
         }
