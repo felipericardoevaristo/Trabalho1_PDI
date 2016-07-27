@@ -189,18 +189,22 @@ public class Efeitos {
         return image;
     }
 
-    public static BufferedImage media(BufferedImage image, int n) {
-        int width = image.getWidth();
-        int height = image.getHeight();
-        int r, g, b, i2=0, j2=0;
-        Color rgb;
+    public static void media(BufferedImage image, int n) {
+        int width = image.getWidth(); //Largura da imagem
+        int height = image.getHeight(); //Altura da imagem
+        int r, g, b, //Componentes de cor
+            i2=0, j2=0; //Variáveis auxiliares, servem para varrer o pixel central e seus vizinhos
+        Color rgb; //Cor a ser setada na imagem
 
+        //Varre a imagem inteira
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
+                //A cada pixel visitado, zera os elementos de cor para não usar lixo da iteração anterior
                 r = g = b = 0;
-                //Bloco com dimensão nxn, em que o pixel do meio será alterado de acordo com a média
+                //Varre o elemento do meio e seus vizinhos
                 for(i2=i-(n/2); i2 <= i+(n/2); i2++){
                     for(j2=j-(n/2); j2 <= j+(n/2); j2++){
+                        //Se algum dos vizinhos estiver fora dos limites da imagem, suas componentes adicionarão 0, ou simplemente não haverá processamento
                         try{
                             r += new Color(image.getRGB(i2, j2)).getRed();
                             g += new Color(image.getRGB(i2, j2)).getGreen();
@@ -216,21 +220,24 @@ public class Efeitos {
                 image.setRGB(i, j, rgb.getRGB()); //Insere a cor no pixel do meio
             }
         }
-        return image;
     }
 
-    public static BufferedImage mediana(BufferedImage image, int n) {
-        int width = image.getWidth();
-        int height = image.getHeight();
-        int r[] = new int[n*n], g[] = new int[n*n], b[] = new int[n*n], i2=0, j2=0, cont;
-        Color rgb;
+    public static void mediana(BufferedImage image, int n) {
+        int width = image.getWidth(); //Largura da imagem
+        int height = image.getHeight(); //Altura da imagem
+        int r[] = new int[n*n], g[] = new int[n*n], b[] = new int[n*n], //Vetores com tamanho nxn que guardarão as componentes r, g e b a cada iteração
+            i2=0, j2=0, cont; //Variáveis auxiliares, servem para varrer o pixel central e seus vizinhos
+        Color rgb; //Cor a ser setada na imagem
 
+        //Varre a imagem inteira
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                cont = 0;
-                //Bloco com dimensão nxn, em que o pixel do meio será alterado de acordo com a mediana
+                //A cada pixel visitado, zera o contador para poder visitá-lo, visitar seus vizinhos e em seguida calcular a mediana
+                cont = 0;                 
+                //Varre o elemento do meio e seus vizinhos
                 for(i2=i-(n/2); i2 <= i+(n/2); i2++){
                     for(j2=j-(n/2); j2 <= j+(n/2); j2++){
+                        //Se algum dos vizinhos estiver fora dos limites da imagem, seu pixel receberá 0 para r, g e b
                         try{
                             r[cont] = new Color(image.getRGB(i2, j2)).getRed();
                             g[cont] = new Color(image.getRGB(i2, j2)).getGreen();
@@ -238,16 +245,15 @@ public class Efeitos {
                             cont++;
                         }
                         catch(ArrayIndexOutOfBoundsException e){
-                            //r += 0; g += 0; b += 0; // Processamento desnecessário
+                            r[cont] = g[cont] = b[cont] = 0;
                         }
                     }
                 }           
-                Arrays.sort(r); Arrays.sort(g); Arrays.sort(b);
-                rgb = new Color(r[r.length/2], g[g.length/2], b[b.length/2]);
+                Arrays.sort(r); Arrays.sort(g); Arrays.sort(b); //Ordena o vetor com o pixel e seus vizinhos
+                rgb = new Color(r[r.length/2], g[g.length/2], b[b.length/2]); //Calcula a mediana para cada componente e atribui a cor
                 image.setRGB(i, j, rgb.getRGB()); //Insere a cor no pixel do meio
             }
         }
-        return image; 
     }
 
     public static BufferedImage blend(BufferedImage img, BufferedImage img2) {
