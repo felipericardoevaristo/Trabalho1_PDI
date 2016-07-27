@@ -126,10 +126,10 @@ public class Efeitos {
         int height = image.getHeight();
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                int rgb = image.getRGB(i, j);
-                int r = (int) ((rgb & 0x00FF0000) >>> 16) + c;
-                int g = (int) ((rgb & 0x0000FF00) >>> 8) + c;
-                int b = (int) (rgb & 0x000000FF) + c;
+                Color cor = new Color(image.getRGB(i, j));
+                int r = cor.getRed() + c;
+                int g = cor.getGreen()+ c;
+                int b = cor.getBlue() + c;
                 if (r > 255) {
                     r = 255;
                 }
@@ -148,8 +148,8 @@ public class Efeitos {
                 if (b > 255) {
                     b = 255;
                 }
-                Color color = new Color(r, g, b);
-                image.setRGB(i, j, color.getRGB());
+                cor = new Color(r, g, b);
+                image.setRGB(i, j, cor.getRGB());
             }
         }
         return image;
@@ -160,10 +160,10 @@ public class Efeitos {
         int height = image.getHeight();
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                int rgb = image.getRGB(i, j);
-                int r = (int) ((rgb & 0x00FF0000) >>> 16) * c;
-                int g = (int) ((rgb & 0x0000FF00) >>> 8) * c;
-                int b = (int) (rgb & 0x000000FF) * c;
+                Color cor = new Color(image.getRGB(i, j));
+                int r = cor.getRed() * c;
+                int g = cor.getGreen()* c;
+                int b = cor.getBlue() * c;
                 if (r > 255) {
                     r = 255;
                 }
@@ -182,8 +182,8 @@ public class Efeitos {
                 if (b > 255) {
                     b = 255;
                 }
-                Color color = new Color(r, g, b);
-                image.setRGB(i, j, color.getRGB());
+                cor = new Color(r, g, b);
+                image.setRGB(i, j, cor.getRGB());
             }
         }
         return image;
@@ -235,25 +235,6 @@ public class Efeitos {
                 Arrays.sort(r); Arrays.sort(g); Arrays.sort(b);
                 rgb = new Color(r[r.length/2], g[g.length/2], b[b.length/2]);
                 image.setRGB(i2-(n/2)-1, j2-(n/2)-1, rgb.getRGB()); //Insere a cor no pixel do meio
-            }
-        }
-        return image;
-    }
-
-    public static BufferedImage limiar(BufferedImage image, int t) {
-        int width = image.getWidth();
-        int height = image.getHeight();
-        Color rgb;
-        int l;
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
-                rgb = new Color(image.getRGB(i, j));
-                l = (rgb.getRed() + rgb.getGreen() + rgb.getBlue()) / 3;
-                if (l > t) {
-                    image.setRGB(i, j, 0xffffff);
-                } else {
-                    image.setRGB(i, j, 0x000000);
-                }
             }
         }
         return image;
