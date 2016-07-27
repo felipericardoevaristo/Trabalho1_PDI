@@ -269,12 +269,9 @@ public class Projeto1PDI extends JFrame {
 
         mediana.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (Integer.parseInt(mask2.getText()) == 3 || Integer.parseInt(mask2.getText()) == 5) {
-                    img2 = Efeitos.mediana(bufferImagem(f), Integer.parseInt(mask2.getText()));
-                    paneImg.setImg(img2);
-                } else {
-                    JOptionPane.showMessageDialog(null, "Digite um tamanho válido da mascara [3,5]");
-                }
+                img2 = Efeitos.mediana(bufferImagem(f), Integer.parseInt(mask2.getText()));
+                paneImg.setImg(img2);
+
             }
         }
         );
