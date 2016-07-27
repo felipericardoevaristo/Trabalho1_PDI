@@ -195,20 +195,25 @@ public class Efeitos {
         int r, g, b, i2=0, j2=0;
         Color rgb;
 
-        for (int i = 0; i < width-n; i++) {
-            for (int j = 0; j < height-n; j++) {
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
                 r = g = b = 0;
                 //Bloco com dimensão nxn, em que o pixel do meio será alterado de acordo com a média
-                for(i2=i; i2 < i+n; i2++){
-                    for(j2=j; j2 < j+n; j2++){
-                        r += new Color(image.getRGB(i2, j2)).getRed();
-                        g += new Color(image.getRGB(i2, j2)).getGreen();
-                        b += new Color(image.getRGB(i2, j2)).getBlue();
+                for(i2=i-(n/2); i2 <= i+(n/2); i2++){
+                    for(j2=j-(n/2); j2 <= j+(n/2); j2++){
+                        try{
+                            r += new Color(image.getRGB(i2, j2)).getRed();
+                            g += new Color(image.getRGB(i2, j2)).getGreen();
+                            b += new Color(image.getRGB(i2, j2)).getBlue();
+                        }
+                        catch(ArrayIndexOutOfBoundsException e){
+                            //r += 0; g += 0; b += 0; // Processamento desnecessário
+                        }
                     }
                 }           
                 r /= (n*n); g /= (n*n); b /= (n*n); //Após a soma, calcula-se a média
                 rgb = new Color(r, g, b);
-                image.setRGB(i2-(n/2)-1, j2-(n/2)-1, rgb.getRGB()); //Insere a cor no pixel do meio
+                image.setRGB(i, j, rgb.getRGB()); //Insere a cor no pixel do meio
             }
         }
         return image;
