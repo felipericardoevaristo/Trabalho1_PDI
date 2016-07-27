@@ -232,62 +232,24 @@ public class Efeitos {
     public static BufferedImage mediana(BufferedImage image, int n) {
         int width = image.getWidth();
         int height = image.getHeight();
+        int r[] = new int[n*n], g[] = new int[n*n], b[] = new int[n*n], i2=0, j2=0, cont;
         Color rgb;
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
-                switch (n) {
-                    case 3:
-                        if (!(i == 0 || j == 0 || i == height - 1 || j == width - 1)) {
-                            int[] rHue = {new Color(image.getRGB(i - 1, j - 1)).getRed(), new Color(image.getRGB(i - 1, j)).getRed(), new Color(image.getRGB(i - 1, j + 1)).getRed(),
-                                new Color(image.getRGB(i, j - 1)).getRed(), new Color(image.getRGB(i, j)).getRed(), new Color(image.getRGB(i, j + 1)).getRed(),
-                                new Color(image.getRGB(i + 1, j - 1)).getRed(), new Color(image.getRGB(i + 1, j)).getRed(), new Color(image.getRGB(i + 1, j + 1)).getRed()};
-                            int[] gHue = {new Color(image.getRGB(i - 1, j - 1)).getGreen(), new Color(image.getRGB(i - 1, j)).getGreen(), new Color(image.getRGB(i - 1, j + 1)).getGreen(),
-                                new Color(image.getRGB(i, j - 1)).getGreen(), new Color(image.getRGB(i, j)).getGreen(), new Color(image.getRGB(i, j + 1)).getGreen(),
-                                new Color(image.getRGB(i + 1, j - 1)).getGreen(), new Color(image.getRGB(i + 1, j)).getGreen(), new Color(image.getRGB(i + 1, j + 1)).getGreen()};
-                            int[] bHue = {new Color(image.getRGB(i - 1, j - 1)).getBlue(), new Color(image.getRGB(i - 1, j)).getBlue(), new Color(image.getRGB(i - 1, j + 1)).getBlue(),
-                                new Color(image.getRGB(i, j - 1)).getBlue(), new Color(image.getRGB(i, j)).getBlue(), new Color(image.getRGB(i, j + 1)).getBlue(),
-                                new Color(image.getRGB(i + 1, j - 1)).getBlue(), new Color(image.getRGB(i + 1, j)).getBlue(), new Color(image.getRGB(i + 1, j + 1)).getBlue()};
 
-                            Arrays.sort(rHue);
-                            Arrays.sort(gHue);
-                            Arrays.sort(bHue);
-
-                            rgb = new Color(rHue[4], gHue[4], bHue[4]);
-                            image.setRGB(i, j, rgb.getRGB());
-                        }
-                        break;
-                    case 5:
-                        if (!(i <= 1 || j <= 1 || i >= height - 2 || j >= width - 2)) {
-                            int[] rHue = {new Color(image.getRGB(i - 2, j - 2)).getRed(), new Color(image.getRGB(i - 2, j - 1)).getRed(), new Color(image.getRGB(i - 2, j)).getRed(), new Color(image.getRGB(i - 2, j + 1)).getRed(), new Color(image.getRGB(i - 2, j + 2)).getRed(),
-                                new Color(image.getRGB(i - 1, j - 2)).getRed(), new Color(image.getRGB(i - 1, j - 1)).getRed(), new Color(image.getRGB(i - 1, j)).getRed(), new Color(image.getRGB(i - 1, j + 1)).getRed(), new Color(image.getRGB(i - 1, j + 2)).getRed(),
-                                new Color(image.getRGB(i, j - 2)).getRed(), new Color(image.getRGB(i, j - 1)).getRed(), new Color(image.getRGB(i, j)).getRed(), new Color(image.getRGB(i, j + 1)).getRed(), new Color(image.getRGB(i, j + 2)).getRed(),
-                                new Color(image.getRGB(i + 1, j - 2)).getRed(), new Color(image.getRGB(i + 1, j - 1)).getRed(), new Color(image.getRGB(i + 1, j)).getRed(), new Color(image.getRGB(i + 1, j + 1)).getRed(), new Color(image.getRGB(i + 1, j + 2)).getRed(),
-                                new Color(image.getRGB(i + 2, j - 2)).getRed(), new Color(image.getRGB(i + 2, j - 1)).getRed(), new Color(image.getRGB(i + 2, j)).getRed(), new Color(image.getRGB(i + 2, j + 1)).getRed(), new Color(image.getRGB(i + 2, j + 2)).getRed()
-                            };
-                            int[] gHue = {new Color(image.getRGB(i - 2, j - 2)).getGreen(), new Color(image.getRGB(i - 2, j - 1)).getGreen(), new Color(image.getRGB(i - 2, j)).getGreen(), new Color(image.getRGB(i - 2, j + 1)).getGreen(), new Color(image.getRGB(i - 2, j + 2)).getGreen(),
-                                new Color(image.getRGB(i - 1, j - 2)).getGreen(), new Color(image.getRGB(i - 1, j - 1)).getGreen(), new Color(image.getRGB(i - 1, j)).getGreen(), new Color(image.getRGB(i - 1, j + 1)).getGreen(), new Color(image.getRGB(i - 1, j + 2)).getGreen(),
-                                new Color(image.getRGB(i, j - 2)).getGreen(), new Color(image.getRGB(i, j - 1)).getGreen(), new Color(image.getRGB(i, j)).getGreen(), new Color(image.getRGB(i, j + 1)).getGreen(), new Color(image.getRGB(i, j + 2)).getGreen(),
-                                new Color(image.getRGB(i + 1, j - 2)).getGreen(), new Color(image.getRGB(i + 1, j - 1)).getGreen(), new Color(image.getRGB(i + 1, j)).getGreen(), new Color(image.getRGB(i + 1, j + 1)).getGreen(), new Color(image.getRGB(i + 1, j + 2)).getGreen(),
-                                new Color(image.getRGB(i + 2, j - 2)).getGreen(), new Color(image.getRGB(i + 2, j - 1)).getGreen(), new Color(image.getRGB(i + 2, j)).getGreen(), new Color(image.getRGB(i + 2, j + 1)).getGreen(), new Color(image.getRGB(i + 2, j + 2)).getGreen()
-                            };
-                            int[] bHue = {new Color(image.getRGB(i - 2, j - 2)).getBlue(), new Color(image.getRGB(i - 2, j - 1)).getBlue(), new Color(image.getRGB(i - 2, j)).getBlue(), new Color(image.getRGB(i - 2, j + 1)).getBlue(), new Color(image.getRGB(i - 2, j + 2)).getBlue(),
-                                new Color(image.getRGB(i - 1, j - 2)).getBlue(), new Color(image.getRGB(i - 1, j - 1)).getBlue(), new Color(image.getRGB(i - 1, j)).getBlue(), new Color(image.getRGB(i - 1, j + 1)).getBlue(), new Color(image.getRGB(i - 1, j + 2)).getBlue(),
-                                new Color(image.getRGB(i, j - 2)).getBlue(), new Color(image.getRGB(i, j - 1)).getBlue(), new Color(image.getRGB(i, j)).getBlue(), new Color(image.getRGB(i, j + 1)).getBlue(), new Color(image.getRGB(i, j + 2)).getBlue(),
-                                new Color(image.getRGB(i + 1, j - 2)).getBlue(), new Color(image.getRGB(i + 1, j - 1)).getBlue(), new Color(image.getRGB(i + 1, j)).getBlue(), new Color(image.getRGB(i + 1, j + 1)).getBlue(), new Color(image.getRGB(i + 1, j + 2)).getBlue(),
-                                new Color(image.getRGB(i + 2, j - 2)).getBlue(), new Color(image.getRGB(i + 2, j - 1)).getBlue(), new Color(image.getRGB(i + 2, j)).getBlue(), new Color(image.getRGB(i + 2, j + 1)).getBlue(), new Color(image.getRGB(i + 2, j + 2)).getBlue()
-                            };
-
-                            Arrays.sort(rHue);
-                            Arrays.sort(gHue);
-                            Arrays.sort(bHue);
-                            //						for(int t = 0; t < 25; t++){
-                            //							System.out.print(rHue[t]+", "); if (t==24) System.out.println("\n");}
-
-                            rgb = new Color(rHue[12], gHue[12], bHue[12]);
-                            image.setRGB(i, j, rgb.getRGB());
-                        }
-                        break;
-                }
+        for (int i = 0; i < width-n; i++) {
+            for (int j = 0; j < height-n; j++) {
+                //Bloco com dimensão nxn, em que o pixel do meio será alterado de acordo com a média
+                cont = 0;
+                for(i2=i; i2 < i+n; i2++){
+                    for(j2=j; j2 < j+n; j2++){
+                        r[cont] = new Color(image.getRGB(i2, j2)).getRed();
+                        g[cont] = new Color(image.getRGB(i2, j2)).getGreen();
+                        b[cont] = new Color(image.getRGB(i2, j2)).getBlue();
+                        cont++;
+                    }
+                }           
+                Arrays.sort(r); Arrays.sort(g); Arrays.sort(b);
+                rgb = new Color(r[r.length/2], g[g.length/2], b[b.length/2]);
+                image.setRGB(i2-(n/2)-1, j2-(n/2)-1, rgb.getRGB()); //Insere a cor no pixel do meio
             }
         }
         return image;
