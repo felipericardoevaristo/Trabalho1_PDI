@@ -208,6 +208,15 @@ public class Projeto1PDI extends JFrame {
             }
         }
         );
+        
+        convertRGB.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                img2 = bufferImagem(f);
+                Efeitos.rgbToyiq(img2);
+                paneImg.setImg(img2);                
+            }
+        }
+        );
 
         bAdd.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

@@ -78,6 +78,32 @@ public class Efeitos {
         }
         return image;
     }
+    
+    static void rgbToyiq(BufferedImage image) {
+        int width = image.getWidth();
+        int height = image.getHeight();
+        float Y, I, Q;
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                Color c = new Color(image.getRGB(i, j));
+                int r = c.getRed();
+                int g = c.getGreen();
+                int b = c.getBlue();
+                //RGB para YIQ
+                Y = 0.299f*r + 0.587f*g + 0.114f*b;
+                I = 0.596f*r - 0.274f*g - 0.322f*b;
+                Q = 0.211f*r - 0.523f*g + 0.312f*b;
+                System.out.println("ANTES: " + "R: " + r + " G: " + g + " B: " + b + " Y: " + Y + " I: " + I + " Q: " + Q);
+                //YIQ para RGB
+                r = (int)(Y + 0.956f*I + 0.621f*Q);
+                g = (int)(Y - 0.272f*I - 0.647f*Q);
+                b = (int)(Y - 1.106f*I + 1.703f*Q);
+                System.out.println("DEPOIS: " + "R: " + r + " G: " + g + " B: " + b + " Y: " + Y + " I: " + I + " Q: " + Q);                
+                Color color = new Color(r, g, b);
+                image.setRGB(i, j, color.getRGB());                
+            }
+        }        
+    }    
 
     public static BufferedImage negativoR(BufferedImage image) {
         int width = image.getWidth();
