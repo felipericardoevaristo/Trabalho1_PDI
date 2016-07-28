@@ -95,12 +95,12 @@ public class Efeitos {
                 Q = 0.211f*r - 0.523f*g + 0.312f*b;
                 System.out.println("ANTES: " + "R: " + r + " G: " + g + " B: " + b + " Y: " + Y + " I: " + I + " Q: " + Q);
                 //YIQ para RGB
-                r = (int)(Y + 0.956f*I + 0.621f*Q);
-                g = (int)(Y - 0.272f*I - 0.647f*Q);
-                b = (int)(Y - 1.106f*I + 1.703f*Q);
+                r = Math.round(Y + 0.956f*I + 0.621f*Q);
+                g = Math.round(Y - 0.272f*I - 0.647f*Q);
+                b = Math.round(Y - 1.106f*I + 1.703f*Q);
                 System.out.println("DEPOIS: " + "R: " + r + " G: " + g + " B: " + b + " Y: " + Y + " I: " + I + " Q: " + Q);                
                 Color color = new Color(r, g, b);
-                image.setRGB(i, j, color.getRGB());                
+                image.setRGB(i, j, color.getRGB());
             }
         }        
     }    
