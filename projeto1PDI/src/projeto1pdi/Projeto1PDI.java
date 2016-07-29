@@ -221,11 +221,9 @@ public class Projeto1PDI extends JFrame {
         bAdd.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 //aditivo brilho
-                if (brilhoA.getText() != "") {
-                    img2 = Efeitos.brilhoAdd(bufferImagem(f), Integer.parseInt(brilhoA.getText()));
-                    paneImg.setImg(img2);
-                } else {
-                    img2 = Efeitos.brilhoAdd(bufferImagem(f), 0);
+                img2 = bufferImagem(f);
+                if (!brilhoA.getText().equals("")) {
+                    Efeitos.brilhoAdd(img2, Integer.parseInt(brilhoA.getText()));
                     paneImg.setImg(img2);
                 }
             }
@@ -235,11 +233,12 @@ public class Projeto1PDI extends JFrame {
         bMult.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 //multiplicativo brilho
-                if (brilhoM.getText() != "") {
-                    img2 = Efeitos.brilhoMult(bufferImagem(f), Integer.parseInt(brilhoM.getText()));
+                img2 = bufferImagem(f);
+                if (!brilhoM.getText().equals("")) {
+                    Efeitos.brilhoMult(img2, Integer.parseInt(brilhoM.getText()));
                     paneImg.setImg(img2);
                 } else {
-                    img2 = Efeitos.brilhoMult(bufferImagem(f), 0);
+                    Efeitos.brilhoMult(img2, 0);
                     paneImg.setImg(img2);
                 }
             }

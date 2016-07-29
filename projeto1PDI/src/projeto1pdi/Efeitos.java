@@ -82,28 +82,39 @@ public class Efeitos {
     static void rgbToyiq(BufferedImage image) {
         int width = image.getWidth();
         int height = image.getHeight();
-        float Y, I, Q;
+        float yiq[] = new float[3];
+        int rgb[] = new int[3];
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 Color c = new Color(image.getRGB(i, j));
-                int r = c.getRed();
-                int g = c.getGreen();
-                int b = c.getBlue();
+                rgb[0] = c.getRed();
+                rgb[1] = c.getGreen();
+                rgb[2] = c.getBlue();
                 //RGB para YIQ
-                Y = 0.299f*r + 0.587f*g + 0.114f*b;
-                I = 0.596f*r - 0.274f*g - 0.322f*b;
-                Q = 0.211f*r - 0.523f*g + 0.312f*b;
-                System.out.println("ANTES: " + "R: " + r + " G: " + g + " B: " + b + " Y: " + Y + " I: " + I + " Q: " + Q);
+                yiq = rgbTOyiq(rgb);
                 //YIQ para RGB
-                r = Math.round(Y + 0.956f*I + 0.621f*Q);
-                g = Math.round(Y - 0.272f*I - 0.647f*Q);
-                b = Math.round(Y - 1.106f*I + 1.703f*Q);
-                System.out.println("DEPOIS: " + "R: " + r + " G: " + g + " B: " + b + " Y: " + Y + " I: " + I + " Q: " + Q);                
-                Color color = new Color(r, g, b);
+                rgb = yiqTOrgb(yiq);             
+                Color color = new Color(rgb[0], rgb[1], rgb[2]);
                 image.setRGB(i, j, color.getRGB());
             }
         }        
     }    
+    
+    public static float[] rgbTOyiq(int rgb[]){
+        float yiq[] = new float[3];
+        yiq[0] = 0.299f*rgb[0] + 0.587f*rgb[1] + 0.114f*rgb[2];
+        yiq[1] = 0.596f*rgb[0] - 0.274f*rgb[1] - 0.322f*rgb[2];
+        yiq[2] = 0.211f*rgb[0] - 0.523f*rgb[1] + 0.312f*rgb[2];        
+        return yiq;
+    }
+    
+    public static int[] yiqTOrgb(float[] yiq){
+        int rgb[] = new int[3];
+        rgb[0] = Math.round(yiq[0] + 0.956f*yiq[1] + 0.621f*yiq[2]) > 255 ? 255 : Math.round(yiq[0] + 0.956f*yiq[1] + 0.621f*yiq[2]) < 0 ? 0 : Math.round(yiq[0] + 0.956f*yiq[1] + 0.621f*yiq[2]);
+        rgb[1] = Math.round(yiq[0] - 0.272f*yiq[1] - 0.647f*yiq[2]) > 255 ? 255 : Math.round(yiq[0] - 0.272f*yiq[1] - 0.647f*yiq[2]) < 0 ? 0 : Math.round(yiq[0] - 0.272f*yiq[1] - 0.647f*yiq[2]);
+        rgb[2] = Math.round(yiq[0] - 1.106f*yiq[1] + 1.703f*yiq[2]) > 255 ? 255 : Math.round(yiq[0] - 1.106f*yiq[1] + 1.703f*yiq[2]) < 0 ? 0 : Math.round(yiq[0] - 1.106f*yiq[1] + 1.703f*yiq[2]);
+        return rgb;
+    }
 
     public static BufferedImage negativoR(BufferedImage image) {
         int width = image.getWidth();
@@ -147,72 +158,44 @@ public class Efeitos {
         return image;
     }
 
-    public static BufferedImage brilhoAdd(BufferedImage image, int c) {
+    public static void brilhoAdd(BufferedImage image, int c) {
         int width = image.getWidth();
         int height = image.getHeight();
+        float yiq[] = new float[3];
+        int rgb[] = new int[3];
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 Color cor = new Color(image.getRGB(i, j));
-                int r = cor.getRed() + c;
-                int g = cor.getGreen()+ c;
-                int b = cor.getBlue() + c;
-                if (r > 255) {
-                    r = 255;
-                }
-                if (r < 0) {
-                    r = 0;
-                }
-                if (g < 0) {
-                    g = 0;
-                }
-                if (g > 255) {
-                    g = 255;
-                }
-                if (b < 0) {
-                    b = 0;
-                }
-                if (b > 255) {
-                    b = 255;
-                }
-                cor = new Color(r, g, b);
+                rgb[0] = cor.getRed();
+                rgb[1] = cor.getGreen();
+                rgb[2] = cor.getBlue();                
+                yiq = rgbTOyiq(rgb); //converte para o sistema yiq, para manipular apenas o brilho
+                yiq[0] += c; //Altera o brilho no sistema yiq                
+                rgb = yiqTOrgb(yiq); //converte para o sistema rgb               
+                cor = new Color(rgb[0], rgb[1], rgb[2]);
                 image.setRGB(i, j, cor.getRGB());
             }
         }
-        return image;
     }
 
-    public static BufferedImage brilhoMult(BufferedImage image, int c) {
+    public static void brilhoMult(BufferedImage image, int c) {
         int width = image.getWidth();
         int height = image.getHeight();
+        float yiq[] = new float[3];
+        int rgb[] = new int[3];
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 Color cor = new Color(image.getRGB(i, j));
-                int r = cor.getRed() * c;
-                int g = cor.getGreen()* c;
-                int b = cor.getBlue() * c;
-                if (r > 255) {
-                    r = 255;
-                }
-                if (r < 0) {
-                    r = 0;
-                }
-                if (g < 0) {
-                    g = 0;
-                }
-                if (g > 255) {
-                    g = 255;
-                }
-                if (b < 0) {
-                    b = 0;
-                }
-                if (b > 255) {
-                    b = 255;
-                }
-                cor = new Color(r, g, b);
+                rgb[0] = cor.getRed();
+                rgb[1] = cor.getGreen();
+                rgb[2] = cor.getBlue();                
+                yiq = rgbTOyiq(rgb); //converte para o sistema yiq, para manipular apenas o brilho
+                yiq[0] *= c; //Altera o brilho no sistema yiq                
+                rgb = yiqTOrgb(yiq); //converte para o sistema rgb               
+                cor = new Color(rgb[0], rgb[1], rgb[2]);
                 image.setRGB(i, j, cor.getRGB());
             }
         }
-        return image;
     }
 
     public static void media(BufferedImage image, int n) {
